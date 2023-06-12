@@ -41,12 +41,18 @@ const encryptionStateCheckbox = document.getElementById("encryptionState");
 const encryption = (message, decryption = false) => {
   let temp = "";
   for (let i = 0; i < message.length; i++) {
-    const found = codes.find((code) => code[+decryption] === message[i]);
+    const found = codes.find(
+      (code) => code[+decryption] === message[i].toLowerCase()
+    );
+
     if (found) {
-      temp += found[+!decryption];
+      if (message[i] === message[i].toUpperCase()) {
+        temp += found[+!decryption].toUpperCase();
+      } else {
+        temp += found[+!decryption];
+      }
     } else {
-      console.error("Даний символ не підтримується");
-      temp = "Error!";
+      temp += message[i];
     }
   }
   return temp;
